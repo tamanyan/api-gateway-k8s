@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kong-admin-ingress
+  namespace: kong
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    basic-auth.plugin.konghq.com: basic-auth-kong-admin
+spec:
+  rules:
+  - host: admin.gw.com
+    http:
+      paths:
+        - path: /
+          backend:
+            serviceName: kong-admin-proxy
+            servicePort: 8001

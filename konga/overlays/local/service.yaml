@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: konga-proxy
+  namespace: kong
+spec:
+  type: LoadBalancer
+  ports:
+  - name: konga-proxy
+    port: 1337
+    targetPort: 1337
+    nodePort: 31031
+    protocol: TCP
+  selector:
+    app: konga

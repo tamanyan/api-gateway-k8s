@@ -1,0 +1,5 @@
+resources:
+- custom-types.yaml
+- rbac.yaml
+- service.yaml
+- deployment.yaml

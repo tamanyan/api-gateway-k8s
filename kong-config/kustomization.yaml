@@ -1,0 +1,4 @@
+resources:
+- plugins.yaml
+- consumers.yaml
+- kong-ingress.yaml

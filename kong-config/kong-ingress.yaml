@@ -1,0 +1,13 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongIngress
+metadata:
+  name: gateway-kong-ingress
+  namespace: kong
+proxy:
+  path: /
+route:
+  protocols:
+  - https
+  - http
+  strip_path: true
+  preserve_host: true

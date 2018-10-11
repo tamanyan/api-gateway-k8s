@@ -1,0 +1,34 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: transform-request-to-external
+config:
+  remove:
+    headers: host
+
+---
+
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: oauth2-tiny-api
+config:
+  refresh_token_ttl: 2419200
+  token_expiration: 1209600
+  scopes: tiny
+  mandatory_scope: true
+  global_credentials: true
+  provision_key: 2MnilJ6WIuKHW0O2gEtFXIBS2zvytiir
+  enable_client_credentials: true
+  enable_password_grant: true
+  enable_authorization_code: true
+  auth_header_name: Authorization
+
+---
+
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: basic-auth-kong-admin
+config:
+  hide_credentials: true

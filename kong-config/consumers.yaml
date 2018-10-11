@@ -1,0 +1,45 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongConsumer
+metadata:
+  name: sample
+  namespace: kong
+username: sample
+custom_id: 36F0C226-1FCE-4D72-AA00-E73EDCE3D0D2
+
+---
+
+apiVersion: configuration.konghq.com/v1
+kind: KongConsumer
+metadata:
+  name: kong-admin
+  namespace: kong
+username: kong-admin
+custom_id: 35C550F1-D231-4D79-8FFA-EA8CD1565348
+
+---
+
+apiVersion: configuration.konghq.com/v1
+kind: KongCredential
+metadata:
+  name: credential-line-bot
+  namespace: kong
+consumerRef: sample
+type: oauth2
+config:
+  name: oauth2-client
+  client_id: Bv6UQ4HeApJpRyhf13fbP2dK33uFTHXH
+  client_secret: KFQCJiUYsIDUWF12b2t34er2SFggRTlP
+  redirect_uri: http://getkong.org/ # sample
+
+---
+
+apiVersion: configuration.konghq.com/v1
+kind: KongCredential
+metadata:
+  name: credential-kong-admin
+  namespace: kong
+consumerRef: kong-admin
+type: basic-auth
+config:
+  username: k0ng-adm1n
+  password: 1k4i68mI4SLeQ9

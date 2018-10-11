@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kong-admin-proxy
+  namespace: kong
+spec:
+  type: NodePort
+  ports:
+  - name: kong-admin-proxy
+    port: 8001
+    targetPort: 8001
+    nodePort: 30416
+    protocol: TCP
+  selector:
+    app: ingress-kong

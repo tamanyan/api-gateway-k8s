@@ -1,0 +1,41 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: konga
+  namespace: kong
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: konga
+        app: konga
+    spec:
+      containers:
+      - name: konga
+        image: pantsel/konga:latest
+        env:
+          - name: NODE_ENV
+            value: development
+          - name: DB_ADAPTER
+            value: postgres
+          - name: DB_HOST
+            value: postgres-proxy
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: user
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: password
+          - name: TOKEN_SECRET
+            value: k1G9Ur4RkcQd7dEWHjpnxRcuZwcKmqjgb
+          - name: DB_DATABASE
+            value: konga_db
+        ports:
+        - name: konga-proxy
+          containerPort: 1337
+          protocol: TCP

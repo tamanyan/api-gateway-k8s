@@ -1,0 +1,46 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kong
+  namespace: kong
+spec:
+  template:
+    metadata:
+      labels:
+        name: kong
+        app: kong
+    spec:
+      initContainers:
+      - name: init-db
+        image: busybox
+        command: ['sh', '-c', 'until nslookup postgres; do echo waiting for postgres; sleep 2; done;']
+      containers:
+      - name: kong
+        image: kong:0.14.1-centos
+        imagePullPolicy: Always
+        env:
+          - name: KONG_PG_USER
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: user
+          - name: KONG_PG_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: password
+          - name: KONG_PG_HOST
+            value: postgres-proxy
+          - name: KONG_PROXY_ACCESS_LOG
+            value: "/dev/stdout"
+          - name: KONG_PROXY_ERROR_LOG
+            value: "/dev/stderr"
+          - name: KONG_ADMIN_LISTEN
+            value: 'off'
+        ports:
+        - name: proxy
+          containerPort: 8000
+          protocol: TCP
+        - name: proxy-ssl
+          containerPort: 8443
+          protocol: TCP
